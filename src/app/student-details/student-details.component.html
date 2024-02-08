@@ -1,0 +1,156 @@
+<!-- //Student Form Part -->
+
+<head>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
+        integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
+</head>
+
+<header>
+    <nav id="nav" class="navbar">
+        <div class="container-fluid">
+            <a class="navbar-brand">STUDENT DETAILS</a>
+            <!-- <form class="d-flex" role="search">
+                <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+                <button class="btn btn-g" type="submit" >Search</button>
+            </form> -->
+            <!-- Button trigger modal -->
+            <button type="button" class="btn btn-g bi btn btn-outline-warning" data-bs-toggle="modal"
+                data-bs-target="#exampleModal"><i></i>
+                Add Student Details
+            </button>
+
+            <!-- Modal -->
+            <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel"
+                aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h1 class="modal-title fs-5" id="exampleModalLabel">Add Student Details </h1>
+                            <!-- <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button> -->
+                        </div>
+                        <div class="modal-body">
+                            <form #basicForm="ngForm" (ngSubmit)="onsubmitdata(basicForm.value)">
+
+                                <div class="mb-3">
+                                    <label for="StudentName" class="form-label">Student Name</label>
+                                    <input type="text" class="form-control" id="StudentName" name="StudentName"
+                                        [(ngModel)]="student.StudentName" required>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="StudentEmail" class="form-label">Student Email</label>
+                                    <input type="email" class="form-control" id="StudentEmail" name="StudentEmail"
+                                        [(ngModel)]="student.StudentEmail" required>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="StudentDepartment" class="form-label">Student Department</label>
+                                    <input type="text" class="form-control" id="StudentDepartment"
+                                        name="StudentDepartment" [(ngModel)]="student.StudentDepartment" required>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="StudentPhone" class="form-label">Student Phone*</label>
+                                    <input type="phone" class="form-control" id="StudentPhone" name="StudentPhone"
+                                        [(ngModel)]="student.StudentPhone" minlength="0" maxlength="10" required>
+                                </div>
+
+                                <div class="button">
+                                    <button type="button" class="btn btn-secondary mx-2" data-bs-dismiss="modal"
+                                        (click)="onclose()">
+                                        Cancle</button>
+                                    <button type="submit" class="btn btn-primary" data-bs-dismiss="modal"
+                                        data-bs-toggle="modal" data-bs-target="#staticBackdrop"
+                                        *ngIf="student.StudentId == 0"> Submit</button>
+                                    <button type="submit" class="btn btn-primary" data-bs-dismiss="modal"
+                                        *ngIf="student.StudentId !== 0" (click)="onUpdatedata()"> update</button>
+                                </div>
+                            </form>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </nav>
+    
+
+    <!-- Add Data Modal -->
+    <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+        aria-labelledby="staticBackdropLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5" id="staticBackdropLabel">Add Data Successfully</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <img class="success" src="https://cdn-icons-png.flaticon.com/128/6785/6785304.png" alt="">
+                </div>
+                <div class="modal-footer">
+                    <!-- <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button> -->
+                    <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Okay</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+
+<!-- //table Data -->
+
+<table class="table table-bordered table-striped table-hover ">
+    <thead class="table-warning">
+        <tr>
+            <th scope="col">Student Id</th>
+            <th scope="col">Student Name</th>
+            <th scope="col">Student Email</th>
+            <th scope="col">Student Department</th>
+            <th scope="col">Student Phone</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr class="table-light" *ngFor="let data of Studentdetail">
+            <th>{{data.StudentId}}</th>
+            <td>{{data.StudentName}}</td>
+            <td>{{data.StudentEmail}}</td>
+            <td>{{data.StudentDepartment}}</td>
+            <td>{{data.StudentPhone}}</td>
+
+            <td>
+                <!-- <button type="submit" class="btn btn-outline-primary" data-bs-toggle="modal"
+                    data-bs-target="#exampleModal" (click)="onUpdateButton(data)">Update</button> -->
+                <img class="mx-3" data-bs-toggle="modal" data-bs-target="#exampleModal"
+                    src="https://cdn-icons-png.flaticon.com/128/5167/5167028.png" alt="" (click)="onUpdateButton(data)"
+                    width="30px" height="30px">
+                <img src="https://cdn-icons-png.flaticon.com/128/8870/8870449.png" data-bs-toggle="modal"
+                    data-bs-target="#staticdelete" alt="" width="40px" height="40px">
+                <!-- <button type="submit" class="btn btn-outline-danger mx-2"
+                    (click)="onDelete(data.StudentId)">Delete</button> -->
+                <div class="modal fade" id="staticdelete" data-bs-backdrop="static" data-bs-keyboard="false"
+                    tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+
+                    <!-- //Delete Modal -->
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h1 class="modal-title fs-5" id="staticBackdropLabel">Are you sure Delete Data</h1>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                    aria-label="Close"></button>
+                            </div>
+                            <div class="modal-body">
+                                <img class="success" src="https://cdn-icons-png.flaticon.com/128/1828/1828843.png"
+                                    alt="">
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                <button type="button" class="btn btn-primary" data-bs-dismiss="modal"
+                                    (click)="onDelete(data.StudentId)">Okay</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </td>
+        </tr>
+
+    </tbody>
+
+</table>
